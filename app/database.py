@@ -124,11 +124,13 @@ def list_points_by_user(user_email):
     return [dict(point) for point in points]
 
 def update_point(point_id, latitude, longitude, descricao):
+
+    wkt_point = f"POINT({longitude} {latitude})"
     conn = get_db_connection()
     with conn.cursor() as cur:
         cur.execute(
-            'UPDATE pontos SET latitude = %s, longitude = %s, descricao = %s WHERE id = %s',
-            (latitude, longitude, descricao, point_id)
+            'UPDATE pontos SET latitude = %s, longitude = %s, descricao = %s,  geom = ST_GeomFromText(%s, 4326) WHERE id = %s',
+            (latitude, longitude, descricao, wkt_point, point_id)
         )
         changes = cur.rowcount
     conn.commit()
