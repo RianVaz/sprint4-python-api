@@ -37,3 +37,35 @@ def init_db():
         ''')
     conn.commit()
     conn.close()
+
+
+# --- FUNÇÔES DE USUÁRIOS ---
+
+def add_user(email, nome):
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute('INSERT INTO usuarios (email, nome) VALUES (%s, %s)', (email, nome))
+        conn.commit()
+    except psycopg2.IntegrityError:
+        return False  # Usuário já existe
+    finally:    
+        conn.close()
+    return True  # Usuário adicionado com sucesso
+
+def remove_user(email):
+    conn = get_db_connection()
+    with conn.cursor() as cur:
+        cur.execute('DELETE FROM usuarios WHERE email = %s', (email,))
+        changes = cur.rowcount
+    conn.commit()
+    conn.close()
+    return changes > 0  # Retorna True se o usuário foi removido
+
+def find_user(email):
+    conn = get_db_connection()
+    with conn.cursor(cursor_factory=DictCursor) as cur:
+        cur.execute('SELECT email, nome FROM ususarios ORDER BY nome ASC')
+        users = cur.fetchall()
+    conn.close()
+    return [dict(user) for user in users]  # Retorna lista de dicionários com os usuários
