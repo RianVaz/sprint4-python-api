@@ -28,11 +28,12 @@ def init_db():
         ''')
         cur.execute('''
             CREATE TABLE IF NOT EXISTS pontos (
-                id TEXT PRIMARY KEY,
+                id SERIAL PRIMARY KEY,
                 latitude REAL NOT NULL,
                 longitude REAL NOT NULL,
                 descricao TEXT NOT NULL,
-                user_email TEXT NOT NULL REFERENCES usuarios(email) ON DELETE CASCADE
+                user_email TEXT NOT NULL REFERENCES usuarios(email) ON DELETE CASCADE,
+                geom GEOMETRY(Point, 4326) NOT NULL
             )
         ''')
     conn.commit()
@@ -77,10 +78,10 @@ def update_user(email, new_name):
 def find_user(email):
     conn = get_db_connection()
     with conn.cursor(cursor_factory=DictCursor) as cur:
-        cur.execute('SELECT email, nome FROM ususarios ORDER BY nome ASC')
-        users = cur.fetchall()
+        cur.execute('SELECT * FROM usuarios WHERE email = %s', (email,))
+        user = cur.fetchall()
     conn.close()
-    return [dict(user) for user in users]  # Retorna lista de dicionários com os usuários
+    return user
 
 def list_all_users():
     conn = get_db_connection()
@@ -89,3 +90,56 @@ def list_all_users():
         users = cur.fetchall()
     conn.close()
     return [dict(user) for user in users]
+
+
+
+# --- FUNÇÕES DE PONTOS ---
+
+
+def add_point(latitude, longitude, descricao, user_email):
+    if not find_user(user_email):
+        return None  # Usuário não existe
+    
+    wkt_point = f"POINT({longitude} {latitude})"
+
+    conn = get_db_connection()
+    new_point_id = None
+    with conn.cursor() as cur:
+        cur.execute(
+            'INSERT INTO pontos (latitude, longitude, descricao, user_email, geom) VALUES (%s, %s, %s, %s, ST_GeomFromText(%s, 4326)) RETURNING id',
+            (latitude, longitude, descricao, user_email, wkt_point)
+        )
+        new_point_id = cur.fetchone()[0]
+    conn.commit()
+    conn.close()
+    return new_point_id
+
+def list_points_by_user(user_email):
+    conn = get_db_connection()
+    with conn.cursor(cursor_factory=DictCursor) as cur:
+        # Adicionamos a coluna wkt_point ao SELECT
+        cur.execute('SELECT id, latitude, longitude, descricao, ST_AsText(geom) as geom FROM pontos WHERE user_email = %s', (user_email,))
+        points = cur.fetchall()
+    conn.close()
+    return [dict(point) for point in points]
+
+def update_point(point_id, latitude, longitude, descricao):
+    conn = get_db_connection()
+    with conn.cursor() as cur:
+        cur.execute(
+            'UPDATE pontos SET latitude = %s, longitude = %s, descricao = %s WHERE id = %s',
+            (latitude, longitude, descricao, point_id)
+        )
+        changes = cur.rowcount
+    conn.commit()
+    conn.close()
+    return changes > 0
+
+def remove_point(point_id):
+    conn = get_db_connection()
+    with conn.cursor() as cur:
+        cur.execute('DELETE FROM pontos WHERE id = %s', (point_id,))
+        changes = cur.rowcount
+    conn.commit()
+    conn.close()
+    return changes > 0

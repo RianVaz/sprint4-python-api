@@ -3,7 +3,7 @@ import app.database as db
 
 user_bp = Blueprint('user_bp', __name__)
 
-#ADICIONAR USERS
+#ADD USERS
 @user_bp.route('/AdicionarUsuario/', methods=['GET'])
 def endpoint_add_user():
     email = request.args.get('email')
@@ -15,7 +15,7 @@ def endpoint_add_user():
     else:
         return jsonify({"erro": "Usuário com este email já existe."}), 409
 
-#REMOVER USERS
+#REMOVE USERS
 @user_bp.route('/RemoverUsuario/', methods=['GET'])
 def endpoint_remove_user():
     email = request.args.get('email')
@@ -47,7 +47,7 @@ def endpoint_update_user():
         return jsonify({"erro": "Usuário não encontrado."}), 404
 
 
-#LISTAR USERS
+#LIST USERS
 @user_bp.route('/ListarUsuarios/', methods=['GET'])
 def endpoint_list_users():
     try:
