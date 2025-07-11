@@ -62,6 +62,18 @@ def remove_user(email):
     conn.close()
     return changes > 0  # Retorna True se o usuário foi removido
 
+def update_user(email, new_name):
+    conn = get_db_connection()
+    with conn.cursor() as cur:
+        # Executa o comando SQL UPDATE
+        cur.execute('UPDATE usuarios SET nome = %s WHERE email = %s', (new_name, email))
+        # cur.rowcount retorna o número de linhas que foram alteradas.
+        # Se for > 0, a atualização foi bem-sucedida.
+        changes = cur.rowcount
+    conn.commit()
+    conn.close()
+    return changes > 0
+
 def find_user(email):
     conn = get_db_connection()
     with conn.cursor(cursor_factory=DictCursor) as cur:
@@ -69,3 +81,11 @@ def find_user(email):
         users = cur.fetchall()
     conn.close()
     return [dict(user) for user in users]  # Retorna lista de dicionários com os usuários
+
+def list_all_users():
+    conn = get_db_connection()
+    with conn.cursor(cursor_factory=DictCursor) as cur:
+        cur.execute('SELECT email, nome FROM usuarios ORDER BY nome ASC')
+        users = cur.fetchall()
+    conn.close()
+    return [dict(user) for user in users]
