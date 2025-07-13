@@ -151,25 +151,19 @@ Todas as operações são feitas via requisições `GET` com parâmetros na URL.
 
 ## 📄 Resultados
 
-![representacao pontos](./images/ImagemGeomPontos.jpg)
+Representação dos pontos do tipo **geometry** criados a partir da **latitude** e **longitude** informados:
 
+![representacao pontos](/images/ImagemGeomPontos.jpg)
+![databese pontos](/images/ImagemBdPonto.jpg)
 
+Resultados apresentados pelo **pytest**:
 
-
-
-
-
-
-
-
-
-
-
+![PytestResult](/images/ImagemPytest.jpg)
 
 ## 🙋‍♂️ Meu Perfil
 
-* **Nome:** Rian Vaz Maurício
-
+* **Nome: Rian Vaz Maurício**
 
 * [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rianvaz)
-
+* [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/RianVaz)
+* [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white)](https://gitlab.com/RianVaz)
