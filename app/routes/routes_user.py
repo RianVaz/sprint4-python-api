@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify # type: ignore
 import app.database as db
 
 user_bp = Blueprint('user_bp', __name__)

@@ -1,5 +1,5 @@
 # app/routes_point.py
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify # type: ignore
 import app.database as db
 
 point_bp = Blueprint('point_bp', __name__)

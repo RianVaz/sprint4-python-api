@@ -1,5 +1,5 @@
-from flask import Flask
-from dotenv import load_dotenv
+from flask import Flask # type: ignore
+from dotenv import load_dotenv # type: ignore
 import app.database as db
 
 def create_app():
