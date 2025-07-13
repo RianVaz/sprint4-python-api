@@ -112,6 +112,7 @@ pytest
 ## 🌐 Referência da API (Endpoints)
 
 Todas as operações são feitas via requisições `GET` com parâmetros na URL.
+
 Apenas a operação de Adicionar Usuarios è feita via requisições `POST` com parâmetros no corpo JSON.
 
 ### Endpoints de Usuário 🧑‍💻
