@@ -112,12 +112,13 @@ pytest
 ## 🌐 Referência da API (Endpoints)
 
 Todas as operações são feitas via requisições `GET` com parâmetros na URL.
+Apenas a operação de Adicionar Usuarios è feita via requisições `POST` com parâmetros no corpo JSON.
 
 ### Endpoints de Usuário 🧑‍💻
 | Ação | URL e Parâmetros | Exemplo Completo |
 | :--- | :--- | :--- |
 | **Listar Todos** | `/ListarUsuarios/` | `http://localhost:8080/ListarUsuarios/` |
-| **Adicionar** | `/AdicionarUsuario/?email=<email>&nome=<nome>` | `http://localhost:8080/AdicionarUsuario/?email=joao@email.com&nome=Joao Silva` |
+| **Adicionar** | `POST /usuarios` com corpo JSON | **URL:** `http://localhost:8080/usuarios`<br>**Body (JSON):**<br>```json<br>{<br> "email": "novo@email.com",<br>  "nome": "Novo Usuario"<br>}<br>``` |
 | **Alterar** | `/AlterarUsuario/?email=<email>&nome=<novo_nome>`| `http://localhost:8080/AlterarUsuario/?email=joao@email.com&nome=Joao da Silva`|
 | **Remover** | `/RemoverUsuario/?email=<email>` | `http://localhost:8080/RemoverUsuario/?email=joao@email.com`|
 

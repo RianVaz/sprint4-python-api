@@ -3,17 +3,37 @@ import app.database as db
 
 user_bp = Blueprint('user_bp', __name__)
 
-#ADD USERS
-@user_bp.route('/AdicionarUsuario/', methods=['GET'])
+#ADD USERS (GET e POST)
+#@user_bp.route('/AdicionarUsuario/', methods=['GET'])
+#def endpoint_add_user():
+#    email = request.args.get('email')
+#    nome = request.args.get('nome')
+#    if not email or not nome:
+#        return jsonify({"erro": "Email e nome são obrigatórios."}), 400
+#    if db.add_user(email, nome):
+#        return jsonify({"mensagem": f"Usuário {nome} adicionado com sucesso."}), 201
+#    else:
+#        return jsonify({"erro": "Usuário com este email já existe."}), 409
+
+@user_bp.route('/AdicionarUsuario', methods=['POST'])
 def endpoint_add_user():
-    email = request.args.get('email')
-    nome = request.args.get('nome')
+    # request.get_json() lê o corpo da requisição e o transforma em um dicionário Python
+    dados = request.get_json()
+
+    # Pegamos os dados do dicionário em vez da URL
+    email = dados.get('email')
+    nome = dados.get('nome')
+
     if not email or not nome:
-        return jsonify({"erro": "Email e nome são obrigatórios."}), 400
+        return jsonify({"erro": "Email e nome são obrigatórios no corpo do JSON."}), 400
+
     if db.add_user(email, nome):
+        # O status de sucesso para criação é 201 Created
         return jsonify({"mensagem": f"Usuário {nome} adicionado com sucesso."}), 201
     else:
         return jsonify({"erro": "Usuário com este email já existe."}), 409
+
+
 
 #REMOVE USERS
 @user_bp.route('/RemoverUsuario/', methods=['GET'])
