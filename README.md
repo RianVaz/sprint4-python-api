@@ -119,7 +119,7 @@ Apenas a operação de Adicionar Usuarios è feita via requisições `POST` com 
 | Ação | URL e Parâmetros | Exemplo Completo |
 | :--- | :--- | :--- |
 | **Listar Todos** | `/ListarUsuarios/` | `http://localhost:8080/ListarUsuarios/` |
-| **Adicionar** | `POST /usuarios` com corpo JSON | **URL:** `http://localhost:8080/usuarios`<br>**Body (JSON):**<br>```json<br>{<br> "email": "novo@email.com",<br>  "nome": "Novo Usuario"<br>}<br>``` |
+| **Adicionar** | `POST /usuarios` com corpo JSON | **URL:** `http://localhost:8080/usuarios`<br>**Body (JSON):**```json<br>{ "email": "novo@email.com",  "nome": "Novo Usuario"}``` |
 | **Alterar** | `/AlterarUsuario/?email=<email>&nome=<novo_nome>`| `http://localhost:8080/AlterarUsuario/?email=joao@email.com&nome=Joao da Silva`|
 | **Remover** | `/RemoverUsuario/?email=<email>` | `http://localhost:8080/RemoverUsuario/?email=joao@email.com`|
 
