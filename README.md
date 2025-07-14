@@ -13,7 +13,7 @@ Este projeto é um backend em Python desenvolvido com Flask para gerenciar usuá
 * **Gerenciamento de Usuários**: Criar, listar, alterar e remover usuários.
 * **Gerenciamento de Pontos**: Criar, listar por usuário, alterar e remover pontos geográficos.
 * **Dados Geoespaciais**: Armazena a geometria dos pontos de forma nativa usando PostGIS.
-* **API REST-like**: Endpoints claros para interagir com os dados (utilizando método GET com parâmetros).
+* **Configuração de rotas de maneira apropriada**: Endpoints claros para interagir com os dados (utilizando método GET com parâmetros).
 * **Testes Automatizados**: Suíte de testes completa com Pytest para garantir a qualidade e o funcionamento da aplicação.
 
 ---
@@ -118,8 +118,8 @@ Apenas a operação de Adicionar Usuarios è feita via requisições `POST` com 
 ### Endpoints de Usuário 🧑‍💻
 | Ação | URL e Parâmetros | Exemplo Completo |
 | :--- | :--- | :--- |
+| **Adicionar** | `POST /usuarios` com corpo JSON | **URL:** `http://localhost:8080/usuarios`**Body:**```json<br>{ "email": "novo@email.com",  "nome": "Novo Usuario"}``` |
 | **Listar Todos** | `/ListarUsuarios/` | `http://localhost:8080/ListarUsuarios/` |
-| **Adicionar** | `POST /usuarios` com corpo JSON | **URL:** `http://localhost:8080/usuarios`<br>**Body (JSON):**```json<br>{ "email": "novo@email.com",  "nome": "Novo Usuario"}``` |
 | **Alterar** | `/AlterarUsuario/?email=<email>&nome=<novo_nome>`| `http://localhost:8080/AlterarUsuario/?email=joao@email.com&nome=Joao da Silva`|
 | **Remover** | `/RemoverUsuario/?email=<email>` | `http://localhost:8080/RemoverUsuario/?email=joao@email.com`|
 
@@ -135,18 +135,17 @@ Apenas a operação de Adicionar Usuarios è feita via requisições `POST` com 
 
 ## 🏛️ Estrutura do Projeto
 ```
-├── app/                  # Pacote principal da aplicação
-│   ├── routes/           # Módulo para os arquivos de rota
-│   │   ├── routes_point.py
-│   │   └── routes_user.py
-│   ├── __init__.py     # Fábrica da aplicação (cria e configura o app)
-│   └── database.py     # Camada de acesso aos dados (interação com o BD)
-│
-├── test_app.py           # Arquivo com os testes automatizados
-├── run.py                # Ponto de entrada para executar a aplicação
-├── .env                  # Arquivo local com as variáveis de ambiente (NÃO VERSIONADO)
-├── .gitignore            # Arquivos e pastas a serem ignorados pelo Git
-└── requirements.txt      # Lista de dependências Python
+> app/                  # Pacote principal da aplicação
+>> routes/              # Módulo para os arquivos de rota
+>>> routes_point.py
+>>> routes_user.py
+>> __init__.py          # Fábrica da aplicação (cria e configura o app)
+>> database.py          # Camada de acesso aos dados (interação com o BD)
+
+> test_app.py           # Arquivo com os testes automatizados
+> run.py                # Ponto de entrada para executar a aplicação
+> .env                  # Arquivo local com as variáveis de ambiente (NÃO VERSIONADO)
+> requirements.txt      # Lista de dependências Python
 ```
 
 ---
